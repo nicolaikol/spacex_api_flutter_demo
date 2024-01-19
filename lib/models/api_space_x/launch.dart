@@ -6,7 +6,7 @@ class Launch {
   final String name;
   final bool? success;
   final String? details;
-  //... Add more properties when they become required. (See here - https://github.com/r-spacex/SpaceX-API/blob/master/docs/launches/v5/all.md)
+  //... add more properties when they become required. (See here for the list - https://github.com/r-spacex/SpaceX-API/blob/master/docs/launches/v5/all.md)
 
   const Launch({
     required this.id,
