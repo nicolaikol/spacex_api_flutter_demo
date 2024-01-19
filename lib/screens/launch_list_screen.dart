@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:spacex_demo/models/api_space_x/Launch.dart';
+import 'package:spacex_demo/models/api_space_x/launch.dart';
+import 'package:spacex_demo/screens/launch_details_screen.dart';
 
 class LaunchListView extends StatefulWidget {
   const LaunchListView({super.key});
@@ -17,6 +18,7 @@ class _LaunchListViewState extends State<LaunchListView> {
   final _scrollController = ScrollController();
   int _currentPage = 0;
   bool _hasNextPage = true;
+  bool _didDispose = false;
 
   // --- STATE Variables
   List<Launch> _list = [];
@@ -31,6 +33,7 @@ class _LaunchListViewState extends State<LaunchListView> {
 
   @override
   void dispose() {
+    _didDispose = true;
     _scrollController.dispose();
     super.dispose();
   }
@@ -57,6 +60,10 @@ class _LaunchListViewState extends State<LaunchListView> {
     });
 
     _fetchData().then((value) {
+      if (_didDispose) {
+        return; // Good practice to not attempt state changes in async processes if the widget is disposed.
+      }
+
       setState(() {
         _list = [
           ..._list,
@@ -86,6 +93,11 @@ class _LaunchListViewState extends State<LaunchListView> {
     }
   }
 
+  _onTapLaunch(Launch l) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => LaunchDetailsScreen(launch: l)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +117,7 @@ class _LaunchListViewState extends State<LaunchListView> {
                 return ListTile(
                   title: Text(l.name),
                   subtitle: Text('#${l.flightNumber} - ${l.id}'),
-                  onTap: ,
+                  onTap: () => _onTapLaunch(l),
                 );
               },
             ),
