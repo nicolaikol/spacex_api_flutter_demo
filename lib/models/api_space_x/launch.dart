@@ -1,4 +1,4 @@
-/// An entity representing the parsed API response from https://github.com/r-spacex/SpaceX-API/blob/master/docs/launches/v5/
+/// An entity representing the parsed API response from https://github.com/r-spacex/SpaceX-API/blob/master/docs/payloads/v4/one.md
 class Launch {
   final String id;
   final List<String> payloadIds;

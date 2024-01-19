@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:spacex_demo/models/api_space_x/launch.dart';
-import 'package:spacex_demo/screens/launch_details_screen.dart';
+import 'package:spacex_demo/screens/launch_details_screen/index.dart';
 
 class LaunchListView extends StatefulWidget {
   const LaunchListView({super.key});

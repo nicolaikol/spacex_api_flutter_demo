@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spacex_demo/models/api_space_x/launch.dart';
+import 'package:spacex_demo/screens/launch_details_screen/components/payload_tile.dart';
 
 class LaunchDetailsScreen extends StatefulWidget {
   const LaunchDetailsScreen({super.key, required this.launch});
@@ -55,9 +56,7 @@ class _LaunchDetailsScreenState extends State<LaunchDetailsScreen> {
                   itemCount: l.payloadIds.length,
                   itemBuilder: (BuildContext context, int index) {
                     String id = l.payloadIds[index];
-                    return ListTile(
-                      title: Text(id),
-                    );
+                    return PayloadListTile(payloadId: id);
                   },
                 ),
               ),
