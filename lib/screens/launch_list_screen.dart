@@ -104,6 +104,7 @@ class _LaunchListViewState extends State<LaunchListView> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text("Launch List"),
+          // actions: [], // TODO: Here we can add a filter/re-order icon which you can click, and it allows you to filter the list / change the order of the list
         ),
         body: LayoutBuilder(builder: (context, constraints) {
           return Stack(alignment: Alignment.bottomCenter, children: [

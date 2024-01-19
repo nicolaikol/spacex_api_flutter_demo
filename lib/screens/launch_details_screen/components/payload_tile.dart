@@ -14,6 +14,9 @@ class PayloadListTile extends StatefulWidget {
 }
 
 class _PayloadListTileState extends State<PayloadListTile> {
+  // --- NON-STATE Variables
+  bool _didDispose = false;
+
   // STATE Variables
   bool _isLoading = true;
   Payload? _payload;
@@ -24,6 +27,12 @@ class _PayloadListTileState extends State<PayloadListTile> {
     _fetchDataWrapper();
   }
 
+  @override
+  void dispose() {
+    _didDispose = true;
+    super.dispose();
+  }
+
   void _fetchDataWrapper() async {
     setState(() {
       _isLoading = true;
@@ -31,6 +40,9 @@ class _PayloadListTileState extends State<PayloadListTile> {
 
     try {
       Payload payload = await _fetchData();
+      if (_didDispose) {
+        return; // Good practice to not attempt state changes in async processes if the widget is disposed.
+      }
       setState(() {
         _payload = payload;
       });
@@ -43,7 +55,7 @@ class _PayloadListTileState extends State<PayloadListTile> {
     });
   }
 
-  // TODO: Build a standardised way of accessing the API, rather than repeatedly building all this overhead boilerplate code in every widget. For example, I have in mind that the URL could be held inside of the Model class, and the retrieval code itself somewhere else which is centralised / standardised.
+  // TODO: Build a standardised way of accessing the API, rather than repeatedly building all this overhead boilerplate code in every widget. For example, I have in mind that the URL could be held inside of the Model class, and the retrieval code itself somewhere else which is centralised / standardised. It could be a wrapper widget leaving the calling code to be really nice and clean.
   Future<Payload> _fetchData() async {
     final response = await http.get(Uri.parse(
         'https://api.spacexdata.com/v4/payloads/${widget.payloadId}'));
